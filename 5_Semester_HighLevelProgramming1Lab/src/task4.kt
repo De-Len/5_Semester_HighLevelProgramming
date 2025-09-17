@@ -1,12 +1,11 @@
-fun main() {
-    println("Введите строку:")
-    val text = readLine()
-    if (text != null) {
-        val stringArr = text.split(" ").sorted()
-        val frequency = stringArr.groupingBy { it }.eachCount()
-        for (string in frequency) {
-            println(string.key + " " + string.value)
-
-        }
+fun main(args: Array<String>) {
+    val words = if (args.isNotEmpty()) {
+        args.toList()
+    } else {
+        return
     }
+
+    val frequencyArr = words.sorted()
+        .groupingBy { it }.eachCount()
+    frequencyArr.forEach { println("${it.key} ${it.value}") }
 }

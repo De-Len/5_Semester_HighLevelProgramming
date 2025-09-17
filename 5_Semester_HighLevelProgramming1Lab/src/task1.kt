@@ -1,11 +1,9 @@
-fun main() {
-    println("Введите строку:")
-    val text = readLine()
-    if (text != null) {
-        val stringArr = text.split(" ")
-
-        for (string in stringArr) {
-            println(string)
-        }
+fun main(args: Array<String>) {
+    val words = if (args.isNotEmpty()) {
+        args.toList()
+    } else {
+        return
     }
+
+    words.forEach { println(it) }
 }

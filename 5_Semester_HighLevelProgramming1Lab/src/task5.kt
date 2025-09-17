@@ -1,28 +1,15 @@
-import kotlin.math.max
-
-fun main() {
-    println("Введите строку:")
-    val text = readLine()
-    if (text != null) {
-        val stringArr = text.split(" ").sorted()
-        val frequency = stringArr.groupingBy { it }.eachCount()
-
-        val maxCount = frequency.maxBy { it.value }.value
-
-        if (maxCount > 1) {
-            val sortedFrequency = frequency.entries.sortedByDescending { it.value }
-
-            for (string in sortedFrequency) {
-                println(string.key + " " + string.value)
-
-            }
-        }
-        else {
-            for (string in frequency) {
-                println(string.key + " " + string.value)
-
-            }
-        }
-
+fun main(args: Array<String>) {
+    val words = if (args.isNotEmpty()) {
+        args.toList()
+    } else {
+        return
     }
+
+    val frequencyArr = words.sorted()
+        .groupingBy { it }.eachCount()
+
+    frequencyArr.entries
+        .sortedWith(compareByDescending<Map.Entry<String, Int>> { it.value }
+            .thenBy { it.key })
+        .forEach { println("${it.key} ${it.value}") }
 }

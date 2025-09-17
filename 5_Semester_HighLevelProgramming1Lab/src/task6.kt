@@ -1,37 +1,15 @@
-import java.util.*
-fun readWordsFromStdin(): List<String> {
-    val scanner = Scanner(System.`in`)
-    val words = mutableListOf<String>()
-
-    while (scanner.hasNext()) {
-        words.add(scanner.next())
-    }
-
-    return words
-}
-
 fun main(text: Array<String>) {
     val words = if (text.isNotEmpty()) {
         text.toList()
     } else {
-        readWordsFromStdin()
+        readln().split(" ")
     }
-    val frequency = words.groupingBy { it }.eachCount()
 
-    val maxCount = frequency.maxBy { it.value }.value
+    val frequencyArr = words.sorted()
+        .groupingBy { it }.eachCount()
 
-    if (maxCount > 1) {
-        val sortedFrequency = frequency.entries.sortedByDescending { it.value }
-
-        for (string in sortedFrequency) {
-            println(string.key + " " + string.value)
-
-        }
-    }
-    else {
-        for (string in frequency) {
-            println(string.key + " " + string.value)
-
-        }
-    }
+    frequencyArr.entries
+        .sortedWith(compareByDescending<Map.Entry<String, Int>> { it.value }
+            .thenBy { it.key })
+        .forEach { println("${it.key} ${it.value}") }
 }
