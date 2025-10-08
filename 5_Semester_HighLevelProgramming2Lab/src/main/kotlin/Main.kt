@@ -26,7 +26,7 @@ fun main(args: Array<String>) {
         parser.parse(args)
     } catch (e: Exception) {
         // kotlinx-cli автоматически печатает справку при ошибке парсинга
-        exitProcess(ExitCode.INVALID_ARGUMENTS.code)
+        exitProcess(ExitCode.UNKNOWN_ACTION.code)
     }
 
     val authService = AuthenticationService(MockDatabase.users)
@@ -35,7 +35,7 @@ fun main(args: Array<String>) {
     val user = authService.authenticate(login, password)
     if (user == null) {
         if (authService.findUser(login) == null) {
-            exitProcess(ExitCode.UNKNOWN_USER.code)
+            exitProcess(ExitCode.INVALID_LOGIN.code)
         } else {
             exitProcess(ExitCode.INVALID_PASSWORD.code)
         }
@@ -43,16 +43,17 @@ fun main(args: Array<String>) {
 
     val resource = authorizer.findResource(resourcePath)
     if (resource == null) {
-        exitProcess(ExitCode.FORBIDDEN.code)
+        exitProcess(ExitCode.RESOURCE_NOT_FOUND.code)
     }
 
     if (!authorizer.hasAccess(login, resourcePath, role)) {
-        exitProcess(ExitCode.FORBIDDEN.code)
+        exitProcess(ExitCode.ACCESS_DENIED.code)
     }
 
     if (volume > resource.maxVolume) {
-        exitProcess(ExitCode.INSUFFICIENT_VOLUME.code)
+        exitProcess(ExitCode.EXCEEDED_MAX_VOLUME.code)
     }
 
+    // если всё ок
     exitProcess(ExitCode.SUCCESS.code)
 }
