@@ -6,6 +6,7 @@ import enums.Role
 import kotlinx.cli.*
 import services.AuthenticationService
 import services.AuthorizationService
+import services.ResourceRepository
 import kotlin.system.exitProcess
 
 
@@ -30,7 +31,8 @@ fun main(args: Array<String>) {
     }
 
     val authService = AuthenticationService(MockDatabase.users)
-    val authorizer = AuthorizationService(MockDatabase.permissions, MockDatabase.resources)
+    val resourceRepo = ResourceRepository(MockDatabase.resources)
+    val authorizer = AuthorizationService(MockDatabase.permissions)
 
     val user = authService.authenticate(login, password)
     if (user == null) {
@@ -41,7 +43,7 @@ fun main(args: Array<String>) {
         }
     }
 
-    val resource = authorizer.findResource(resourcePath)
+    val resource = resourceRepo.findByPath(resourcePath)
     if (resource == null) {
         exitProcess(ExitCode.RESOURCE_NOT_FOUND.code)
     }
