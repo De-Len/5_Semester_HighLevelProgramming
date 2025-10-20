@@ -1,9 +1,10 @@
 package services
 
+import application.port.out.UserRepository
 import database.User
 
-class AuthenticationService(private val users: List<User>) {
-    fun findUser(login: String): User? = users.firstOrNull { it.login == login }
+class AuthenticationService(private val userRepository: UserRepository) {
+    fun findUser(login: String): User? = userRepository.findByLogin(login)
 
     fun authenticate(login: String, pass: String): User? {
         val user = findUser(login) ?: return null
