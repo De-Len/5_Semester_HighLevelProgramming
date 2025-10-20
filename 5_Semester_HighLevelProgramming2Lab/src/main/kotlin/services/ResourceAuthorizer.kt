@@ -1,6 +1,6 @@
 package services
 
-import database.MockDatabase
+import infrastructure.persistence.mock.MockDatabase
 import enums.Role
 import exceptions.*
 

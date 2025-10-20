@@ -1,5 +1,8 @@
-package database
+package infrastructure.persistence.mock
 
+import database.Permission
+import database.Resource
+import database.User
 import services.HashingService
 import enums.Role
 

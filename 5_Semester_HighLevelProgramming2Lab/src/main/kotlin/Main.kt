@@ -1,6 +1,5 @@
 // src/main/kotlin/Main.kt
 
-import database.MockDatabase
 import enums.ExitCode
 import enums.Role
 import exceptions.ExceededVolumeException
