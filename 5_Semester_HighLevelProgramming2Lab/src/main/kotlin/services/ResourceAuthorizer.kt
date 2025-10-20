@@ -4,10 +4,11 @@ import infrastructure.persistence.mock.MockDatabase
 import enums.Role
 import exceptions.*
 
-class ResourceAuthorizer {
-    private val authService = AuthenticationService(MockDatabase.users)
-    private val resourceRepo = ResourceRepository(MockDatabase.resources)
-    private val authorizer = AuthorizationService(MockDatabase.permissions)
+class ResourceAuthorizer (
+    private val authService: AuthenticationService,
+    private val resourceRepo: ResourceRepository,
+    private val authorizer: AuthorizationService
+) {
 
     fun authorize(login: String, password: String, resourcePath: String, role: Role, volume: Int) {
         val user = authService.authenticate(login, password)
