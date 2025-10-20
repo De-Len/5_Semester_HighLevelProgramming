@@ -6,8 +6,14 @@ import exceptions.ExceededVolumeException
 import exceptions.InvalidLoginException
 import exceptions.InvalidPasswordException
 import exceptions.ResourceNotFoundException
+import infrastructure.persistence.mock.MockPermissionRepositoryAdapter
+import infrastructure.persistence.mock.MockResourceRepositoryAdapter
+import infrastructure.persistence.mock.MockUserRepositoryAdapter
 import kotlinx.cli.*
+import services.AuthenticationService
+import services.AuthorizationService
 import services.ResourceAuthorizer
+import services.ServiceResourceRepository
 import kotlin.system.exitProcess
 
 
@@ -29,7 +35,16 @@ fun main(args: Array<String>) {
         exitProcess(ExitCode.UNKNOWN_ACTION.code)
     }
 
-    val authorizer = ResourceAuthorizer()
+    val mockUserRepository = MockUserRepositoryAdapter()
+    val mockResourceRepository = MockResourceRepositoryAdapter()
+    val mockPermissionRepository = MockPermissionRepositoryAdapter()
+
+    val authService = AuthenticationService(mockUserRepository)
+    val serviceResourceRepository = ServiceResourceRepository(mockResourceRepository)
+    val authorizationService = AuthorizationService(mockPermissionRepository)
+
+
+    val authorizer = ResourceAuthorizer(authService, serviceResourceRepository, authorizationService)
 
     try {
         authorizer.authorize(login, password, resourcePath, role, volume)

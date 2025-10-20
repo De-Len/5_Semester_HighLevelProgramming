@@ -1,12 +1,11 @@
 package services
 
-import infrastructure.persistence.mock.MockDatabase
 import enums.Role
 import exceptions.*
 
 class ResourceAuthorizer (
     private val authService: AuthenticationService,
-    private val resourceRepo: ResourceRepository,
+    private val resourceRepo: ServiceResourceRepository,
     private val authorizer: AuthorizationService
 ) {
 
