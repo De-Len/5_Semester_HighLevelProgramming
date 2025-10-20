@@ -43,7 +43,6 @@ fun main(args: Array<String>) {
     val serviceResourceRepository = ServiceResourceRepository(mockResourceRepository)
     val authorizationService = AuthorizationService(mockPermissionRepository)
 
-
     val authorizer = ResourceAuthorizer(authService, serviceResourceRepository, authorizationService)
 
     try {
