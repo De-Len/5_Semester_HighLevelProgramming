@@ -1,9 +1,7 @@
-package services
+package application.port.shared
 
 import application.port.out.PermissionRepository
-import database.Permission
-import database.Resource
-import enums.Role
+import domain.enums.Role
 
 class AuthorizationService(
     private val permissionRepository: PermissionRepository

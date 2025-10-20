@@ -1,4 +1,4 @@
-package enums
+package domain.enums
 
 enum class ExitCode(val code: Int) {
     SUCCESS(0),                    // Успешное выполнение

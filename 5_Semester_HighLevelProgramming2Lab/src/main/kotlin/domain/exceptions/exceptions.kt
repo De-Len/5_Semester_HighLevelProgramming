@@ -1,4 +1,4 @@
-package exceptions
+package domain.exceptions
 
 class InvalidLoginException : Exception()
 class InvalidPasswordException : Exception()

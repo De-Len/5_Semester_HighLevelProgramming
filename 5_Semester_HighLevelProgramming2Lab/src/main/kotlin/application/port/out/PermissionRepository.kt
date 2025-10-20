@@ -1,7 +1,7 @@
 package application.port.out
 
 import database.Permission
-import enums.Role
+import domain.enums.Role
 
 interface PermissionRepository {
     fun findByUserAndResource(login: String, resourcePath: String): List<Permission>

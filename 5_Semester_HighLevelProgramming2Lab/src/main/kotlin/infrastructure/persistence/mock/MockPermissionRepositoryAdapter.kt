@@ -2,8 +2,8 @@ package infrastructure.persistence.mock
 
 import application.port.out.PermissionRepository
 import database.Permission
-import enums.Role
-import services.ResourceParser
+import domain.enums.Role
+import infrastructure.services.ResourceParser
 
 class MockPermissionRepositoryAdapter : PermissionRepository {
     override fun findByUserAndResource(login: String, resourcePath: String): List<Permission> {

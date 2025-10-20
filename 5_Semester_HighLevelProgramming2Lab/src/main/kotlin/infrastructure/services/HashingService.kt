@@ -1,4 +1,4 @@
-package services
+package infrastructure.services
 
 import java.security.MessageDigest
 import java.security.SecureRandom

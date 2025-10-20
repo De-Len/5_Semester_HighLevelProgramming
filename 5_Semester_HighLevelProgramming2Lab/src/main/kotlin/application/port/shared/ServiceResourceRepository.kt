@@ -1,4 +1,4 @@
-package services
+package application.port.shared
 
 import application.port.out.ResourceRepository
 import database.Resource

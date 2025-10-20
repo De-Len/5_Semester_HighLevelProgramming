@@ -1,19 +1,19 @@
 // src/main/kotlin/Main.kt
 
-import enums.ExitCode
-import enums.Role
-import exceptions.ExceededVolumeException
-import exceptions.InvalidLoginException
-import exceptions.InvalidPasswordException
-import exceptions.ResourceNotFoundException
+import domain.enums.ExitCode
+import domain.enums.Role
+import domain.exceptions.ExceededVolumeException
+import domain.exceptions.InvalidLoginException
+import domain.exceptions.InvalidPasswordException
+import domain.exceptions.ResourceNotFoundException
 import infrastructure.persistence.mock.MockPermissionRepositoryAdapter
 import infrastructure.persistence.mock.MockResourceRepositoryAdapter
 import infrastructure.persistence.mock.MockUserRepositoryAdapter
 import kotlinx.cli.*
-import services.AuthenticationService
-import services.AuthorizationService
-import services.ResourceAuthorizer
-import services.ServiceResourceRepository
+import application.port.shared.AuthenticationService
+import application.port.shared.AuthorizationService
+import usecase.ResourceAuthorizer
+import application.port.shared.ServiceResourceRepository
 import kotlin.system.exitProcess
 
 

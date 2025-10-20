@@ -1,7 +1,10 @@
-package services
+package usecase
 
-import enums.Role
-import exceptions.*
+import application.port.shared.AuthenticationService
+import application.port.shared.AuthorizationService
+import application.port.shared.ServiceResourceRepository
+import domain.enums.Role
+import domain.exceptions.*
 
 class ResourceAuthorizer (
     private val authService: AuthenticationService,

@@ -1,4 +1,4 @@
-package services
+package infrastructure.services
 
 object ResourceParser {
     fun splitPath(path: String): List<String> =

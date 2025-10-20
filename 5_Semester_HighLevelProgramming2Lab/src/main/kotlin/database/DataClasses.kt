@@ -1,6 +1,6 @@
 package database
 
-import enums.Role
+import domain.enums.Role
 
 data class Permission(val userLogin: String, val resourcePath: String, val role: Role)
 
