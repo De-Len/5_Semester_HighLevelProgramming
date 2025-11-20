@@ -9,5 +9,7 @@ enum class ExitCode(val code: Int) {
     ACCESS_DENIED(5),              // Нет доступа
     RESOURCE_NOT_FOUND(6),         // Несуществующий ресурс
     INVALID_FORMAT(7),             // Некорректный формат ресурса или объема
-    EXCEEDED_MAX_VOLUME(8);        // Превышение максимального объема
+    EXCEEDED_MAX_VOLUME(8),        // Превышение максимального объема
+    DATABASE_CONNECTION_ERROR(9),  // Ошибка подключения к базе данных
+    SQL_QUERY_ERROR(10);           // Ошибка SQL-запроса
 }
