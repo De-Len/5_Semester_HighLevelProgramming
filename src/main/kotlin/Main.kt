@@ -1,4 +1,5 @@
 // src/main/kotlin/Main.kt
+// test
 
 import domain.enums.ExitCode
 import domain.enums.Role
