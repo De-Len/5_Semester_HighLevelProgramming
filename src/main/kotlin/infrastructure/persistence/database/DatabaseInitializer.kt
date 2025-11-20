@@ -46,54 +46,24 @@ object DatabaseInitializer {
             val userCount = resultSet.getInt("count")
 
             if (userCount == 0) {
-                // Создаем тестовых пользователей
-                val user1Salt = HashingService.generateSalt()
-                val user2Salt = HashingService.generateSalt()
-
-                // Добавляем пользователей
-                insertUser(connection, User("user1", HashingService.hashPassword("pass1", user1Salt), HashingService.saltToBase64(user1Salt)))
-                insertUser(connection, User("user2", HashingService.hashPassword("pass2", user2Salt), HashingService.saltToBase64(user2Salt)))
-
-                // Добавляем ресурсы
-                insertResource(connection, Resource("A", 100))
-                insertResource(connection, Resource("A.B", 50))
-                insertResource(connection, Resource("A.B.C", 20))
-                insertResource(connection, Resource("D.E", 10))
-
-                // Добавляем разрешения
-                insertPermission(connection, Permission("user1", "A", Role.READ))
-                insertPermission(connection, Permission("user1", "A.B", Role.WRITE))
-                insertPermission(connection, Permission("user2", "A.B.C", Role.EXECUTE))
+                // Выполняем SQL из insert_data.sql файла
+                executeInsertDataSql(connection)
             }
         }
     }
 
-    private fun insertUser(connection: java.sql.Connection, user: User) {
-        val sql = "INSERT INTO users (login, password_hash, salt) VALUES (?, ?, ?)"
-        connection.prepareStatement(sql).use { statement ->
-            statement.setString(1, user.login)
-            statement.setString(2, user.passHash)
-            statement.setString(3, user.salt)
-            statement.executeUpdate()
-        }
-    }
+    private fun executeInsertDataSql(connection: java.sql.Connection) {
+        val insertDataSql = readSqlFile("init/insert_data.sql")
 
-    private fun insertResource(connection: java.sql.Connection, resource: Resource) {
-        val sql = "INSERT INTO resources (path, volume) VALUES (?, ?)"
-        connection.prepareStatement(sql).use { statement ->
-            statement.setString(1, resource.path)
-            statement.setInt(2, resource.maxVolume)
-            statement.executeUpdate()
-        }
-    }
-
-    private fun insertPermission(connection: java.sql.Connection, permission: Permission) {
-        val sql = "INSERT INTO permissions (user_login, resource_path, role) VALUES (?, ?, ?)"
-        connection.prepareStatement(sql).use { statement ->
-            statement.setString(1, permission.userLogin)
-            statement.setString(2, permission.resourcePath)
-            statement.setString(3, permission.role.toString())
-            statement.executeUpdate()
+        connection.createStatement().use { statement ->
+            // Выполняем все SQL команды из файла
+            insertDataSql.split(";")
+                .filter { it.isNotBlank() }
+                .forEach { sql ->
+                    if (sql.trim().isNotBlank()) {
+                        statement.execute(sql.trim())
+                    }
+                }
         }
     }
 

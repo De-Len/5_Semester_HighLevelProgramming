@@ -15,6 +15,9 @@ import application.port.shared.AuthenticationService
 import application.port.shared.AuthorizationService
 import usecase.ResourceAuthorizer
 import application.port.shared.ServiceResourceRepository
+import infrastructure.persistence.database.H2PermissionRepositoryAdapter
+import infrastructure.persistence.database.H2ResourceRepositoryAdapter
+import infrastructure.persistence.database.H2UserRepositoryAdapter
 import kotlin.system.exitProcess
 
 
@@ -36,13 +39,17 @@ fun main(args: Array<String>) {
         exitProcess(ExitCode.UNKNOWN_ACTION.code)
     }
 
-    val mockUserRepository = MockUserRepositoryAdapter()
-    val mockResourceRepository = MockResourceRepositoryAdapter()
-    val mockPermissionRepository = MockPermissionRepositoryAdapter()
+//    val mockUserRepository = MockUserRepositoryAdapter()
+//    val mockResourceRepository = MockResourceRepositoryAdapter()
+//    val mockPermissionRepository = MockPermissionRepositoryAdapter()
+    val userRepositoryAdapter = H2UserRepositoryAdapter()
+    val resourceRepositoryAdapter = H2ResourceRepositoryAdapter()
+    val permissionRepositoryAdapter = H2PermissionRepositoryAdapter()
 
-    val authService = AuthenticationService(mockUserRepository)
-    val serviceResourceRepository = ServiceResourceRepository(mockResourceRepository)
-    val authorizationService = AuthorizationService(mockPermissionRepository)
+
+    val authService = AuthenticationService(userRepositoryAdapter)
+    val serviceResourceRepository = ServiceResourceRepository(resourceRepositoryAdapter)
+    val authorizationService = AuthorizationService(permissionRepositoryAdapter)
 
     val authorizer = ResourceAuthorizer(authService, serviceResourceRepository, authorizationService)
 
