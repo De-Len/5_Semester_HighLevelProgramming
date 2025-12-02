@@ -39,17 +39,17 @@ fun main(args: Array<String>) {
         exitProcess(ExitCode.UNKNOWN_ACTION.code)
     }
 
-//    val mockUserRepository = MockUserRepositoryAdapter()
-//    val mockResourceRepository = MockResourceRepositoryAdapter()
-//    val mockPermissionRepository = MockPermissionRepositoryAdapter()
-    val userRepositoryAdapter = H2UserRepositoryAdapter()
-    val resourceRepositoryAdapter = H2ResourceRepositoryAdapter()
-    val permissionRepositoryAdapter = H2PermissionRepositoryAdapter()
+    val mockUserRepository = MockUserRepositoryAdapter()
+    val mockResourceRepository = MockResourceRepositoryAdapter()
+    val mockPermissionRepository = MockPermissionRepositoryAdapter()
+//    val userRepositoryAdapter = H2UserRepositoryAdapter()
+//    val resourceRepositoryAdapter = H2ResourceRepositoryAdapter()
+//    val permissionRepositoryAdapter = H2PermissionRepositoryAdapter()
 
 
-    val authService = AuthenticationService(userRepositoryAdapter)
-    val serviceResourceRepository = ServiceResourceRepository(resourceRepositoryAdapter)
-    val authorizationService = AuthorizationService(permissionRepositoryAdapter)
+    val authService = AuthenticationService(mockUserRepository)
+    val serviceResourceRepository = ServiceResourceRepository(mockResourceRepository)
+    val authorizationService = AuthorizationService(mockPermissionRepository)
 
     val authorizer = ResourceAuthorizer(authService, serviceResourceRepository, authorizationService)
 

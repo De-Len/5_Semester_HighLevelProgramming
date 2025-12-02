@@ -1,0 +1,47 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches: [ main, master, CI-CD ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # 1. Сборка .jar
+      - name: Build JAR
+        run: ./gradlew jar
+
+      # 2. Запуск модульных тестов
+      - name: Run Unit Tests
+        run: ./gradlew test
+
+      # 3. Запуск тестов приложения
+      - name: Run Application Tests
+        run: |
+          chmod +x test.sh
+          ./test.sh
+
+      # 4. Анализ качества кода (пример для SonarCloud)
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      # 5. Оповещение в Telegram
+      - name: Telegram Notification
+        if: always()
+        run: |
+          curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d "text=✅ Pipeline ${{ job.status }} for PR#${{ github.event.pull_request.number }}"
