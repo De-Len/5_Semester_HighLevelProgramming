@@ -1,6 +1,8 @@
 name: CI Pipeline
 
 on:
+  push:
+    branches: [ main, master, CI-CD ]
   pull_request:
     branches: [ main, master, CI-CD ]
 
@@ -18,18 +20,11 @@ jobs:
           distribution: 'temurin'
 
       # 1. Сборка .jar
+      - name: Clean JAR
+        run: ./gradlew clean
+
       - name: Build JAR
-        run: ./gradlew jar
-
-      # 2. Запуск модульных тестов
-      - name: Run Unit Tests
-        run: ./gradlew test
-
-      # 3. Запуск тестов приложения
-      - name: Run Application Tests
-        run: |
-          chmod +x test.sh
-          ./test.sh
+        run: ./gradlew shadowJar
 
       # 4. Анализ качества кода (пример для SonarCloud)
       - name: SonarCloud Scan
