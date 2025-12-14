@@ -1,14 +1,14 @@
-package usecase
+package lab7.usecase
 
-import application.port.shared.AuthenticationService
-import application.port.shared.AuthorizationService
-import application.port.shared.ServiceResourceRepository
+import lab7.application.port.shared.AuthenticationService
+import lab7.application.port.shared.AuthorizationService
+import lab7.application.port.shared.ServiceResourceRepository
 import domain.enums.Role
 import domain.exceptions.*
 import org.springframework.stereotype.Component
 
 @Component
-class ResourceAuthorizer (
+open class ResourceAuthorizer (
     private val authService: AuthenticationService,
     private val resourceRepo: ServiceResourceRepository,
     private val authorizer: AuthorizationService
