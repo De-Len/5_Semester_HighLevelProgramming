@@ -14,6 +14,10 @@ repositories {
     mavenCentral()
 }
 
+springBoot {
+    mainClass.set("lab7.AuthorizerAppKt") // или lab7.AuthorizerApp, если используете companion object
+}
+
 sonar {
     properties {
         property("sonar.projectKey", "De-Len_5_Semester_HighLevelProgramming")
@@ -22,7 +26,7 @@ sonar {
 }
 
 application {
-    mainClass.set("MainKt")
+    mainClass.set("lab7.AuthorizerAppKt")
 }
 
 dependencies {
