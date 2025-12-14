@@ -2,7 +2,9 @@ package infrastructure.persistence.mock
 
 import application.port.out.UserRepository
 import database.User
+import org.springframework.stereotype.Repository
 
+@Repository
 class MockUserRepositoryAdapter : UserRepository {
     override fun findByLogin(login: String): User? {
         return MockDatabase.users.find { it.login == login }

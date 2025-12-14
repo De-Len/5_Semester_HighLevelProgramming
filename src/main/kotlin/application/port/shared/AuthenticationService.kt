@@ -3,7 +3,9 @@ package application.port.shared
 import application.port.out.UserRepository
 import database.User
 import infrastructure.services.HashingService
+import org.springframework.stereotype.Service
 
+@Service
 class AuthenticationService(private val userRepository: UserRepository) {
     fun findUser(login: String): User? = userRepository.findByLogin(login)
 

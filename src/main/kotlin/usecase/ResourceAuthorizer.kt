@@ -5,7 +5,9 @@ import application.port.shared.AuthorizationService
 import application.port.shared.ServiceResourceRepository
 import domain.enums.Role
 import domain.exceptions.*
+import org.springframework.stereotype.Component
 
+@Component
 class ResourceAuthorizer (
     private val authService: AuthenticationService,
     private val resourceRepo: ServiceResourceRepository,
