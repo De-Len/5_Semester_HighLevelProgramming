@@ -1,0 +1,59 @@
+name: CD Pipeline
+
+on:
+  pull_request:
+    branches: [ main, master ]
+    types: [ opened, synchronize, reopened ]  # не только closed
+
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with: { java-version: '17' }
+
+      # 1. Сборка fat-jar
+      - name: Build Fat JAR
+        run: ./gradlew shadowJar
+
+      # 2. Сборка Docker образа
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/myapp:${{ github.sha }} .
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/myapp:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
+
+      # 3. Пуш в DockerHub
+      - name: Push to DockerHub
+        run: |
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/myapp:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
+
+      # 4. Создание релиза GitHub
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ github.run_number }}
+          name: Release v${{ github.run_number }}
+          body: |
+            Docker image: `${{ secrets.DOCKERHUB_USERNAME }}/myapp:${{ github.sha }}`
+            Commit: ${{ github.event.head_commit.message }}
+          draft: false
+          prerelease: false
+          files: |
+            build/libs/*-all.jar
+
+      # 5. Telegram оповещение
+      - name: Telegram Notification
+        if: always()
+        run: |
+          curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d "text=🚀 CD Pipeline: ${{ job.status }}%0A📦 Image: ${{ secrets.DOCKERHUB_USERNAME }}/myapp:${{ github.sha }}%0A🔖 Release: v${{ github.run_number }}"
