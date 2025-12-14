@@ -7,8 +7,8 @@ CLI-утилита для аутентификации и авторизации
 ```bash
 ./gradlew build
 java -jar build/libs/5_Semester_HighLevelProgramming2Lab-1.0-SNAPSHOT-all.jar \
-  --login user1 \
-  --pass secret \
-  --res A.B.C \
-  --role READ \
-  --vol 10
+  -login user1 \
+  -pass secret \
+  -res A.B.C \
+  -role READ \
+  -vol 10

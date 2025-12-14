@@ -3,6 +3,8 @@ plugins {
     application
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("org.sonarqube") version "7.0.0.6105"
+    id("org.springframework.boot") version "3.4.0"
+    id("io.spring.dependency-management") version "1.1.7"
 }
 
 group = "org.example"
@@ -28,6 +30,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-cli:0.3.5")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("com.h2database:h2:2.2.224")
+    implementation("org.springframework.boot:spring-boot-starter")
 
 
 }
