@@ -12,7 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>2.0.10</kotlin.version>
-        <kotlinx.cli.version>0.3.5</kotlinx.cli.version>
+        <kotlinx.cli.version>0.3.6</kotlinx.cli.version>
         <kotlinx.coroutines.version>1.10.2</kotlinx.coroutines.version>
         <h2database.version>2.2.224</h2database.version>
         <spring.boot.version>3.4.0</spring.boot.version>
@@ -40,7 +40,7 @@
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>
-            <artifactId>kotlinx-cli</artifactId>
+            <artifactId>kotlinx-cli-jvm</artifactId>
             <version>${kotlinx.cli.version}</version>
         </dependency>
         <dependency>
@@ -73,6 +73,8 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+
 
     <build>
         <!-- КРИТИЧЕСКИ ВАЖНО: указываем исходные директории -->
