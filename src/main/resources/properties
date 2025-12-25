@@ -1,0 +1,5 @@
+spring.main.web-application-type=none
+# 👇 Отключаем всё, связанное с БД:
+spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,\
+  org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration,\
+  org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
