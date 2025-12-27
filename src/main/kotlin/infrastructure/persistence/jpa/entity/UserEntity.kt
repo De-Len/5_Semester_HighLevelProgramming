@@ -4,17 +4,9 @@ import database.User
 import jakarta.persistence.*
 
 @Entity
-@Table(
-    name = "users",
-    uniqueConstraints = [UniqueConstraint(columnNames = ["login"])]
-)
-class UserEntity(
-
+@Table(name = "users")
+data class UserEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
-
-    @Column(nullable = false, length = 50)
     val login: String,
 
     @Column(nullable = false)
@@ -23,10 +15,3 @@ class UserEntity(
     @Column(nullable = false)
     val salt: String
 )
-
-fun UserEntity.toDomain(): User =
-    User(
-        login = login,
-        passHash = passwordHash,
-        salt = salt
-    )

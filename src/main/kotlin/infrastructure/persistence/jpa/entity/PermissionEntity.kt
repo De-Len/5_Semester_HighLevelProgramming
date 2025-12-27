@@ -1,30 +1,20 @@
 package lab7.infrastructure.persistence.jpa.entity
 
+import database.Permission
 import domain.enums.Role
 import jakarta.persistence.*
 
-
 @Entity
-@Table(
-    name = "permissions",
-    indexes = [
-        Index(columnList = "user_id"),
-        Index(columnList = "resource_id")
-    ]
-)
-class PermissionEntity(
+@Table(name = "permissions")
+data class PermissionEntity(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null,
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    @Column(nullable = false)
+    val userLogin: String,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    val user: UserEntity,
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "resource_id", nullable = false)
-    val resource: ResourceEntity,
+    @Column(nullable = false)
+    val resourcePath: String,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

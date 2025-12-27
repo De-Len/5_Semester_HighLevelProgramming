@@ -13,6 +13,6 @@ open class AuthenticationService(private val userRepository: UserRepository) {
         val user = findUser(login) ?: return null
         val salt = HashingService.saltFromBase64(user.salt)
         val hash = HashingService.hashPassword(pass, salt)
-        return if (hash == user.passHash) user else null
+        return if (hash == user.passwordHash) user else null
     }
 }
