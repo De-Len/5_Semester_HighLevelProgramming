@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 interface UserJpaRepository : JpaRepository<UserEntity, String>
 
 @Repository
-class JpaUserRepositoryAdapter(
+open class JpaUserRepositoryAdapter(
     private val repository: UserJpaRepository
 ) : UserRepository {
 

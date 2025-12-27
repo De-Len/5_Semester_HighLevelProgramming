@@ -2,11 +2,9 @@ package lab7.infrastructure.persistence.jpa.repository
 
 import application.port.out.PermissionRepository
 import database.Permission
-import database.Resource
 import domain.enums.Role
 import infrastructure.services.ResourceParser.generateSubPaths
 import lab7.infrastructure.persistence.jpa.entity.PermissionEntity
-import lab7.infrastructure.persistence.jpa.entity.ResourceEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
@@ -16,7 +14,7 @@ interface PermissionJpaRepository : JpaRepository<PermissionEntity, Long> {
 }
 
 @Repository
-class JpaPermissionRepositoryAdapter(
+open class JpaPermissionRepositoryAdapter(
     private val repository: PermissionJpaRepository
 ) : PermissionRepository {
 
