@@ -3,7 +3,6 @@ package lab7.usecase
 import domain.enums.ExitCode
 import domain.enums.Role
 import domain.exceptions.*
-import kotlinx.cli.*
 import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
