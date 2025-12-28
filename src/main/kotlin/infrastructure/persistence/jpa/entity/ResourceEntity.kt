@@ -1,6 +1,5 @@
 package lab7.infrastructure.persistence.jpa.entity
 
-import database.Resource
 import jakarta.persistence.*
 
 @Entity
