@@ -1,7 +1,7 @@
 -- Users
 INSERT INTO users (login, password_hash, salt) VALUES
-('user1', 'pass1_hash', 'salt1'),
-('user2', 'pass2_hash', 'salt2');
+('user1', 'IssOwq8laW1VuGMoeOyoYpc1reF3vTGGE2e087+Vweo=', 'c2FsdDE='),
+('user2', 'P10BcVQK0ddrXEHzBOl9I0x+/JTmyPrgi7vYWwKu+0w=', 'c2FsdDI=');
 
 -- Resources
 INSERT INTO resources (path, max_volume) VALUES

@@ -7,7 +7,6 @@ import kotlinx.cli.*
 import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
-import lab7.usecase.ResourceAuthorizer
 import kotlin.system.exitProcess
 
 @Component
