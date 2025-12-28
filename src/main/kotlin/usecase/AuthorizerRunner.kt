@@ -6,7 +6,6 @@ import domain.exceptions.*
 import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
-import lab7.usecase.ResourceAuthorizer
 import kotlin.system.exitProcess
 
 @Component
@@ -19,11 +18,13 @@ open class AuthorizerRunner(
     override fun run(vararg args: String) {
         val parser = ArgParser("resource-authorizer", strictSubcommandOptionsOrder = true)
 
-        val login by parser.option(ArgType.String, shortName = "login").required()
-        val password by parser.option(ArgType.String, shortName = "pass").required()
-        val resourcePath by parser.option(ArgType.String, shortName = "res").required()
-        val role by parser.option(ArgType.Choice<Role>(), shortName = "role").required()
-        val volume by parser.option(ArgType.Int, shortName = "vol").required()
+        val login by parser.option(ArgType.String, fullName = "login", shortName = "l").required()
+        val password by parser.option(ArgType.String, fullName = "password", shortName = "p").required()
+        val resourcePath by parser.option(ArgType.String, fullName = "resourcePath", shortName = "r").required()
+        val role by parser.option(ArgType.Choice<Role>(), fullName = "role", shortName = "o").required()
+        val volume by parser.option(ArgType.Int, fullName = "volume", shortName = "v").required()
+
+        parser.parse(args)
 
         try {
             authorizer.authorize(login, password, resourcePath, role, volume)
